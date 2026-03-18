@@ -6,7 +6,7 @@ I made:
 - `exercise_1.py` (word frequency using a dict)
 - `exercise_2.py` (grade book using a list of dicts)
 
-List vs Dict (easy words)
+List vs Dict
 
 Use `list` when:
 - You have a collection of items in order.
