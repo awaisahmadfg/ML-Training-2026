@@ -16,3 +16,6 @@ print("\nClass results:")
 scores = [45, 72, 91, 60, 38, 85]
 for s in scores:
     print(s, "->", grade_classifier(s))
+
+
+
