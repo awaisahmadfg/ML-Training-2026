@@ -33,7 +33,7 @@ def print_all_tables():
 def main():
     n = get_number_1_to_12()
     print_table(n)
-    print_all_tables()  # comment this out if you don't want the bonus part
+    print_all_tables()
 
 
 if __name__ == "__main__":
