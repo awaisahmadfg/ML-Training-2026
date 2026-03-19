@@ -12,16 +12,16 @@ Covers:
 - Building dictionaries with comprehensions
 """
 
-
+# NOTE: keys different hoti hain values same hosakti
 def demo_dict_basics() -> None:
     person = {"name": "Ada", "age": 36, "role": "engineer"}
 
     print("person:", person)
 
-    # Access
+    # is tarah access kerny sy error aiy ga ager value ni hai
     print("name:", person["name"])
 
-    # Safe access with get()
+    # To safest was get() hai iska
     print("country (missing):", person.get("country"))
     print("country (default):", person.get("country", "Unknown"))
 
@@ -62,6 +62,8 @@ def invert_dict(d: dict[str, int]) -> dict[int, str]:
 
 def demo_dict_comprehension() -> None:
     nums = [1, 2, 3, 4]
+    # Basically dictionary comprehension and list comprehension short way ha list ya dictionary banany ka using loops.
+    # Ye dictionay comprehension hai jo list comprehension jaisi hoti hai, lekin curly braces ke sath.
     squares = {n: n * n for n in nums}
     print("squares:", squares)
 

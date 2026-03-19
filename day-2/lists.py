@@ -9,8 +9,18 @@ Covers:
 - Mutating lists (append/extend/insert/remove/pop)
 - Sorting
 - Looping and list comprehensions
-"""
 
+
+Real Project Example
+Scenario: Notifications system
+    notifications = ["msg1", "msg2"]
+-> New single notification:
+        notifications.append("msg3")
+-> Bulk notifications from API:
+        notifications.extend(["msg4", "msg5"])
+-> Important notification at top:
+        notifications.insert(0, "URGENT")
+"""
 
 def demo_basic_lists() -> None:
     nums = [10, 20, 30]
@@ -95,12 +105,6 @@ def main() -> None:
     print("chunk([1,2,3,4,5], 2):", chunk([1, 2, 3, 4, 5], 2))
     nested = [[1, 2], [3], [4, 5, 6]]
     print("flatten_one_level:", flatten_one_level(nested))
-
-    # Practice prompts (small tasks):
-    # 1) Create a list nums = [1,2,3,4,5] and sum it using a loop.
-    # 2) Given words = ["cat","dog","fish"], make a list of lengths.
-    # 3) Create a list of only even numbers from mixed = [1..10].
-
 
 if __name__ == "__main__":
     main()
