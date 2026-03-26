@@ -1,30 +1,17 @@
 Day 4: APIs + Requests - Python talking to the world
 
 Goal:
-- External API ko call karna
-- Response samajhna (`status_code`, JSON body, headers)
-- Errors safely handle karna
-- Docs padkar unknown endpoints pe bhi kaam karna
-
-References:
-- Corey Schafer tutorial: [youtube.com/watch?v=tb8gHvYlCFs](https://youtube.com/watch?v=tb8gHvYlCFs)
-- Requests quickstart: [docs.python-requests.org/en/latest/user/quickstart](https://docs.python-requests.org/en/latest/user/quickstart/)
+- To call the external API
+- To understand the response (`status_code`, JSON body, headers)
+- To handle the errros safely
+- To work on unknown endpoints
 
 Files:
 - `day-4/requests_basics.py`
+- `day-4/classes_static_class.py`
+- `day-4/inheritance.py`
 - `day-4/github_user_report.py`
 - `day-4/weather_cli.py`
-
-Run:
-```bash
-cd day-4
-python3 requests_basics.py
-```
-
-If requests not installed:
-```bash
-pip install requests
-```
 
 What each basic line does (core pattern):
 ```python
@@ -74,17 +61,11 @@ except requests.exceptions.RequestException as err:
 ```
 
 How to read API docs quickly (real-world skill):
-1. Endpoint + method check karo (`GET /users`, `POST /orders`).
-2. Required headers dekho (token/API key?).
-3. Request body shape dekho (JSON fields kaun se chahiye).
-4. Response examples dekho (success + error dono).
-5. Rate limits and pagination note karo.
-
-Mini practice tasks:
-1. `GET /users` call karo aur sirf names print karo.
-2. `GET /posts` with `params={"userId": 1}`.
-3. `POST /posts` me apna title/body bhejo.
-4. Ek wrong endpoint hit karke error handler verify karo.
+1. Check the endpoint and method (`e.g., GET /users, POST /orders`).
+2. Look at the required headers (is a token or API key needed?).
+3. Check the request body structure (which JSON fields are required).
+4. Review response examples (both success and error responses).
+5. Note rate limits and pagination details.
 
 Exercise outputs (real API run):
 
@@ -168,6 +149,6 @@ Description: Slight rain (code 61)
 ```
 
 What was the hardest part of reading API responses?
-- GitHub API ka response bohat bada hota hai; pehle samajhna mushkil hota hai ke kaun se fields directly useful hain.
-- Weather API me do alag responses chain hotay hain (geocoding + forecast), aur `weather_code` ko human-readable text me map karna part thora confusing hota hai.
-- Is liye scripts me pehle raw JSON print kiya gaya hai, phir extraction kiya gaya hai.
+- The GitHub API response is very large, so at first it is difficult to understand which fields are actually useful.
+- In the Weather API, there are two separate responses (geocoding + forecast), and converting the weather_code into human-readable text is a bit confusing.
+- Because of this, the scripts first print the raw JSON, and then extract the required data step by step.
