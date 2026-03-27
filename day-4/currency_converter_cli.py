@@ -3,36 +3,42 @@ Real API Use Case #2
 Currency Converter CLI (Beginner Friendly)
 
 API used:
-- https://api.frankfurter.app
+- https://open.er-api.com
 """
 
 import requests
 
 
 def fetch_supported_currencies() -> dict:
-    # ye endpoint available currency codes + names deta hai.
-    url = "https://api.frankfurter.app/currencies"
+    # ye endpoint base currency ki tamam rates deta hai (codes yahan se mil jate hain).
+    url = "https://open.er-api.com/v6/latest/USD"
     response = requests.get(url, timeout=10)
     response.raise_for_status()
-    return response.json()
+    data = response.json()
+    rates = data.get("rates", {})
+
+    # same interface rakhne ke liye code->code dict return kar rahe hain.
+    currencies = {code: code for code in rates.keys()}
+    currencies["USD"] = "USD"
+    return currencies
 
 
 def convert_amount(amount: float, from_currency: str, to_currency: str) -> float:
-    # ye endpoint amount convert karta hai.
-    url = "https://api.frankfurter.app/latest"
-
-    params = {
-        "amount": amount,
-        "from": from_currency,
-        "to": to_currency,
-    }
-
-    response = requests.get(url, params=params, timeout=10)
+    # open.er-api per "latest/<base>" se target rates milti hain.
+    url = f"https://open.er-api.com/v6/latest/{from_currency}"
+    response = requests.get(url, timeout=10)
     response.raise_for_status()
     data = response.json()
 
-    # response me rates object hota hai, jahan target currency ki converted value hoti hai.
-    return float(data["rates"][to_currency])
+    if data.get("result") != "success":
+        raise ValueError(f"API conversion failed: {data.get('error-type', 'unknown')}")
+
+    rates = data.get("rates", {})
+    if to_currency not in rates:
+        raise ValueError(f"Target currency '{to_currency}' not found in API rates.")
+
+    # rates me 1 FROM = X TO hota hai, to amount multiply karte hain.
+    return amount * float(rates[to_currency])
 
 
 def main() -> None:
@@ -72,6 +78,9 @@ def main() -> None:
 
     try:
         converted = convert_amount(amount, from_currency, to_currency)
+    except ValueError as err:
+        print("Data/API error:", err)
+        return
     except requests.exceptions.HTTPError as err:
         print("API HTTP error:", err)
         return
