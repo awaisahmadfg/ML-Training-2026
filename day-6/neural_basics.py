@@ -63,8 +63,8 @@ class DenseLayer:
         n_inputs: int,
         n_neurons: int,
         activation: ActivationFn,
-        weights: List[List[float]] | None = None,
-        biases: List[float] | None = None,
+        weights: List[List[float]] | None = None, # None = None ka matlab optional hai, agar user weights nahi dega to default 0.0 se initialize karenge.
+        biases: List[float] | None = None, # None = None ka matlab optional hai, agar user biases nahi dega to default 0.0 se initialize karenge.
     ) -> None:
         # Layer configuration save kar rahe hain.
         self.n_inputs = n_inputs
