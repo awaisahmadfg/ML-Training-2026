@@ -9,64 +9,64 @@
 
 ### Why no libraries?
 
-- Kyun ke agar aap is cheez ko hand-written Python me bana lete ho, to aapko actual math + flow deeply samajh aata hai.
-- Phir jab aap PyTorch use karte ho, to blind coding nahi hoti; aap intelligent decisions lete ho kyun ke "andar kya ho raha hai" clear hota hai.
+- If you can build this with plain Python by hand, you understand the core math and flow deeply.
+- Then when you use PyTorch, you do it intelligently because you know what is happening under the hood.
 
 ### What each weight represents
 
-- Har weight ek specific input feature ki importance/impact ko represent karta hai.
-- Agar weight positive ho, to woh input barhne par neuron output barhne ka chance hota hai.
-- Agar weight negative ho, to woh input barhne par neuron output kam hone ka chance hota hai.
-- Weight ka absolute size (jaise `0.9` vs `0.1`) batata hai kitna strong effect hai.
+- Each weight represents the importance/impact of one specific input feature.
+- If a weight is positive, increasing that input tends to increase the neuron output.
+- If a weight is negative, increasing that input tends to decrease the neuron output.
+- The absolute value of the weight (for example, `0.9` vs `0.1`) shows how strong that effect is.
 
 Simple example:
 - Inputs: `[x1, x2, x3]`
 - Weights: `[0.2, 0.7, -0.5]`
-- Is ka matlab `x2` ka effect strong positive hai, aur `x3` output ko neeche kheench raha hai.
+- This means `x2` has a strong positive effect, while `x3` pulls the output down.
 
 ### What bias does
 
-- Bias ek constant value hoti hai jo weighted sum me add hoti hai:
+- Bias is a constant value added to the weighted sum:
   `z = sum(w*x) + bias`
-- Bias neuron ko flexibility deta hai ke input sab zero hon tab bhi output shift ho sake.
-- Decision boundary ko shift karne me bias important role play karta hai.
+- Bias gives the neuron flexibility, so it can shift output even when inputs are zero.
+- Bias helps move the decision boundary left or right.
 
 ### ReLU vs Sigmoid - what changes?
 
 - **ReLU**:
   - Formula: `max(0, x)`
-  - Negative input ka output `0`, positive input same rehta hai.
-  - Fast aur deep networks me common use hota hai.
-  - Sparse activations deta hai (kuch neurons 0 ho jate hain).
+  - Negative input becomes `0`; positive input stays unchanged.
+  - Fast and commonly used in deep networks.
+  - Produces sparse activations (some neurons become 0).
 
 - **Sigmoid**:
   - Formula: `1 / (1 + e^-x)`
-  - Output hamesha `0` se `1` ke darmiyan hota hai.
-  - Probability-style output ke liye useful (especially output layer me).
-  - Large positive/negative inputs par saturate karta hai (gradient very small ho sakta hai).
+  - Output is always between `0` and `1`.
+  - Useful for probability-style outputs (especially in output layers).
+  - Can saturate for very large positive/negative inputs (very small gradients).
 
 ### In this exercise
 
-- Part 1 me same neuron ko ReLU aur Sigmoid dono se run karke difference dekha.
-- Part 3 tiny network me pehla layer ReLU aur doosra Sigmoid rakha:
-  - ReLU hidden layer features extract karta hai
-  - Sigmoid final layer output ko bounded range me deta hai
+- In Part 1, we ran the same neuron with both ReLU and Sigmoid to compare behavior.
+- In Part 3 tiny network, we used ReLU in the first layer and Sigmoid in the second:
+  - ReLU helps extract hidden features
+  - Sigmoid gives bounded final outputs
 
 ### Forward propagation (in my own words)
 
-- Forward propagation ka matlab hai input ko layer-by-layer aage pass karna.
-- Har neuron pehle `sum(w*x) + bias` nikalta hai, phir activation function lagata hai.
-- Jo output pehli layer se nikalta hai, woh next layer ka input ban jata hai.
-- End me final numbers milte hain jo model ka current prediction hote hain.
-- Is stage me sirf "calculation" hoti hai, learning abhi nahi hoti.
+- Forward propagation means passing input forward layer by layer.
+- Each neuron computes `sum(w*x) + bias`, then applies an activation function.
+- The output of one layer becomes input for the next layer.
+- At the end, we get final numbers that represent the model's current prediction.
+- At this stage, only calculation happens; no learning happens yet.
 
 ### What is missing for actual learning?
 
-Network ko learn karne ke liye yeh cheezein missing hain:
-- **Training data with labels** (ground truth chahiye hota hai)
-- **Loss function** (prediction kitni ghalat hai, yeh measure karna)
-- **Backpropagation** (weights/biases ke gradients nikalna)
-- **Optimizer / update rule** (jaise gradient descent se parameters update karna)
-- **Many training iterations (epochs)** taake error dheere dheere kam ho
+For the network to actually learn, these parts are missing:
+- **Training data with labels** (ground truth targets)
+- **Loss function** (measure how wrong predictions are)
+- **Backpropagation** (compute gradients for weights/biases)
+- **Optimizer / update rule** (for example gradient descent to update parameters)
+- **Many training iterations (epochs)** so error can decrease over time
 
-Abhi humne sirf forward pass banaya hai; isi liye network predict to karta hai, lekin khud se better hona nahi seekhta.
+Right now we only implemented the forward pass, so the network can produce outputs but cannot improve by itself.
